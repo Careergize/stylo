@@ -5,6 +5,7 @@ import { ServiceDetailScreen } from '../ServiceDetailScreen';
 import { BookingsTab } from '../BookingsTab';
 import { StylistsTab } from '../StylistsTab';
 import { LocationTab } from '../LocationTab';
+import { ReviewsTab } from '../ReviewsTab';
 import { BottomNavBar } from '../BottomNavBar';
 import { BookingConfirmationModal } from '../BookingConfirmationModal';
 import { SERVICES } from '../../data/salonData';
@@ -100,6 +101,10 @@ export const MobileApp: React.FC<MobileAppProps> = ({
                 setActiveScreen('service-detail');
               }}
             />
+          )}
+
+          {activeNavTab === 'reviews' && (
+            <ReviewsTab />
           )}
 
           {activeNavTab === 'stylists' && (

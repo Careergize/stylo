@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Calendar, Users, MapPin } from 'lucide-react';
+import { Home, Calendar, Users, MapPin, Star } from 'lucide-react';
 
 interface BottomNavBarProps {
   activeTab: string;
@@ -15,8 +15,9 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   const tabs = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'bookings', label: 'Bookings', icon: Calendar, badge: hasUpcoming },
+    { id: 'reviews', label: 'Reviews', icon: Star },
     { id: 'stylists', label: 'Stylists', icon: Users },
-    { id: 'location', label: 'Profile', icon: MapPin },
+    { id: 'location', label: 'Contact', icon: MapPin },
   ];
 
   return (
@@ -30,7 +31,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
             <button
               key={tab.id}
               onClick={() => onSelectTab(tab.id)}
-              className={`relative flex flex-col items-center justify-center py-1 px-4 transition-all duration-200 cursor-pointer ${
+              className={`relative flex flex-col items-center justify-center py-1 px-2 sm:px-3 transition-all duration-200 cursor-pointer ${
                 isActive ? 'text-[#E0A96D]' : 'text-neutral-400 hover:text-neutral-200'
               }`}
             >

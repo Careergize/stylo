@@ -1,54 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { Phone, Calendar, MapPin, MessageCircle, Tag } from 'lucide-react';
+import { Phone, Calendar, MapPin, MessageCircle } from 'lucide-react';
 import { SALON_INFO } from '../../data/salonData';
 
+export type DesktopScreen = 'home' | 'services' | 'stylists' | 'reviews' | 'contact' | 'bookings';
+
 interface DesktopNavbarProps {
+  activeScreen: DesktopScreen;
+  onSelectScreen: (screen: DesktopScreen) => void;
   onOpenBooking: () => void;
-  onOpenBookingsList: () => void;
   activeBookingCount: number;
 }
 
 export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
+  activeScreen,
+  onSelectScreen,
   onOpenBooking,
-  onOpenBookingsList,
   activeBookingCount
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
-
-      // Section highlight
-      const sections = ['services', 'offers', 'stylists', 'location'];
-      const scrollPos = window.scrollY + 200;
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(section);
-            return;
-          }
-        }
-      }
-      if (window.scrollY < 300) {
-        setActiveSection('hero');
-      }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+  const handleNavClick = (screen: DesktopScreen) => {
+    onSelectScreen(screen);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -57,12 +39,12 @@ export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
         className={`max-w-7xl mx-auto rounded-full transition-all duration-300 flex items-center justify-between px-6 sm:px-8 py-3 ${
           isScrolled
             ? 'bg-[#121214]/90 backdrop-blur-2xl border border-[#D4A373]/30 shadow-[0_20px_60px_rgba(0,0,0,0.85),0_0_30px_rgba(212,163,115,0.12)]'
-            : 'bg-[#141416]/75 backdrop-blur-xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.6)]'
+            : 'bg-[#141416]/85 backdrop-blur-xl border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.6)]'
         }`}
       >
-        {/* Brand & Monogram Logo - Clean & Uncluttered */}
+        {/* Brand & Monogram Logo */}
         <div
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => handleNavClick('home')}
           className="flex items-center gap-3.5 cursor-pointer group select-none"
         >
           <div className="relative w-10 h-10 rounded-full border border-[#D4A373]/80 bg-gradient-to-br from-[#2E241B] via-[#1A1612] to-[#0E0D0C] flex items-center justify-center shadow-[0_0_18px_rgba(212,163,115,0.3)] transition-transform duration-300 group-hover:scale-105">
@@ -81,12 +63,23 @@ export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           </div>
         </div>
 
-        {/* Center Nav Links Box */}
-        <nav className="hidden lg:flex items-center gap-1.5 bg-[#1A1A1E]/80 border border-white/5 p-1 rounded-full px-3 text-xs font-medium text-neutral-300">
+        {/* Center Nav Links - Multi-Screen Navigation */}
+        <nav className="hidden lg:flex items-center gap-1 bg-[#1A1A1E]/80 border border-white/5 p-1 rounded-full px-2.5 text-xs font-medium text-neutral-300">
           <button
-            onClick={() => scrollTo('services')}
+            onClick={() => handleNavClick('home')}
             className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'services'
+              activeScreen === 'home'
+                ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
+                : 'hover:text-white hover:bg-white/5'
+            }`}
+          >
+            Home
+          </button>
+
+          <button
+            onClick={() => handleNavClick('services')}
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
+              activeScreen === 'services'
                 ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
                 : 'hover:text-white hover:bg-white/5'
             }`}
@@ -95,24 +88,9 @@ export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           </button>
 
           <button
-            onClick={() => scrollTo('offers')}
-            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
-              activeSection === 'offers'
-                ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
-                : 'hover:text-white hover:bg-white/5'
-            }`}
-          >
-            <Tag className="w-3 h-3 text-[#E0A96D]" />
-            <span>Offers</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-[#E0A96D]/20 text-[#E0A96D] text-[9px] font-bold border border-[#E0A96D]/40">
-              20% OFF
-            </span>
-          </button>
-
-          <button
-            onClick={() => scrollTo('stylists')}
+            onClick={() => handleNavClick('stylists')}
             className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'stylists'
+              activeScreen === 'stylists'
                 ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
                 : 'hover:text-white hover:bg-white/5'
             }`}
@@ -121,61 +99,73 @@ export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({
           </button>
 
           <button
-            onClick={() => scrollTo('location')}
+            onClick={() => handleNavClick('reviews')}
             className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
-              activeSection === 'location'
+              activeScreen === 'reviews'
                 ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
                 : 'hover:text-white hover:bg-white/5'
             }`}
           >
-            Location
+            Reviews
           </button>
 
           <button
-            onClick={onOpenBookingsList}
-            className="px-4 py-1.5 rounded-full hover:text-white hover:bg-white/5 transition-all cursor-pointer flex items-center gap-1.5"
+            onClick={() => handleNavClick('contact')}
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer ${
+              activeScreen === 'contact'
+                ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
+                : 'hover:text-white hover:bg-white/5'
+            }`}
           >
-            <Calendar className="w-3.5 h-3.5 text-[#E0A96D]" />
+            Contact
+          </button>
+
+          <button
+            onClick={() => handleNavClick('bookings')}
+            className={`px-4 py-1.5 rounded-full transition-all cursor-pointer flex items-center gap-1.5 ${
+              activeScreen === 'bookings'
+                ? 'bg-[#E0A96D] text-black font-semibold shadow-sm'
+                : 'hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Calendar className={`w-3.5 h-3.5 ${activeScreen === 'bookings' ? 'text-black' : 'text-[#E0A96D]'}`} />
             <span>My Bookings</span>
             {activeBookingCount > 0 && (
-              <span className="w-4 h-4 rounded-full bg-[#E0A96D] text-black text-[10px] font-bold flex items-center justify-center">
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
+                activeScreen === 'bookings' ? 'bg-black text-[#E0A96D]' : 'bg-[#E0A96D] text-black'
+              }`}>
                 {activeBookingCount}
               </span>
             )}
           </button>
         </nav>
 
-        {/* Action Controls & Book CTA - Spacious & Clean */}
+        {/* Right Action: Direct Phone & Book Appointment CTA */}
         <div className="flex items-center gap-3">
           <a
-            href="https://wa.me/919123456789?text=Hi%20Stylo%20Gents%20Beauty%20Parlor!"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WhatsApp"
-            title="Chat on WhatsApp"
-            className="w-9 h-9 rounded-full bg-[#1C1C1E] border border-white/10 hover:border-[#25D366]/60 hover:bg-[#252528] flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm"
+            href={`tel:${SALON_INFO.phone}`}
+            className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C1C1E] border border-white/10 hover:border-[#E0A96D]/40 text-xs font-medium text-neutral-300 hover:text-white transition-all cursor-pointer"
+            title="Call Salon"
           >
-            <MessageCircle className="w-4 h-4 text-[#25D366]" />
+            <Phone className="w-3.5 h-3.5 text-[#E0A96D]" />
+            <span>{SALON_INFO.phone}</span>
           </a>
 
           <a
-            href={`tel:${SALON_INFO.phone}`}
-            aria-label="Call Salon"
-            title={`Call Salon: ${SALON_INFO.phone}`}
-            className="w-9 h-9 rounded-full bg-[#1C1C1E] border border-white/10 hover:border-[#E0A96D]/60 hover:bg-[#252528] flex items-center justify-center text-neutral-300 hover:text-white transition-all shadow-sm"
+            href={`https://wa.me/${SALON_INFO.whatsapp.replace(/\D/g, '')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-9 h-9 rounded-full bg-[#1C1C1E] border border-white/10 hover:border-emerald-500/50 hover:bg-emerald-950/30 flex items-center justify-center text-emerald-400 transition-all cursor-pointer"
+            title="Chat on WhatsApp"
           >
-            <Phone className="w-4 h-4 text-[#E0A96D]" />
+            <MessageCircle className="w-4 h-4" />
           </a>
 
           <button
             onClick={onOpenBooking}
-            className="group relative px-6 py-2.5 rounded-full bg-gradient-to-r from-[#E0A96D] via-[#D4A373] to-[#B88652] hover:brightness-110 active:scale-95 text-black font-semibold text-xs tracking-wide shadow-[0_6px_25px_rgba(212,163,115,0.35)] transition-all cursor-pointer flex items-center gap-2"
+            className="px-5 py-2.5 rounded-full bg-gradient-to-r from-[#E0A96D] via-[#D4A373] to-[#B88652] hover:brightness-105 active:scale-95 text-black font-semibold text-xs tracking-wider uppercase shadow-[0_4px_18px_rgba(212,163,115,0.35)] transition-all cursor-pointer"
           >
-            <Calendar className="w-3.5 h-3.5" />
-            <span>Book Appointment</span>
-            <div className="w-5 h-5 rounded-full bg-black/80 flex items-center justify-center text-[#E0A96D] transition-transform duration-200 group-hover:translate-x-0.5">
-              <span className="text-xs font-bold">→</span>
-            </div>
+            Book Appointment
           </button>
         </div>
       </header>

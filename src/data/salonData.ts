@@ -102,7 +102,7 @@ export const SERVICES: Service[] = [
       "Almond & Argan Beard Oil Massage",
       "Cool Astringent Touch-up"
     ],
-    image: "/images/service_haircut.jpg",
+    image: "/images/service_beard_trimming.jpg",
     iconName: "Flame",
     isPopular: true
   },
@@ -122,7 +122,7 @@ export const SERVICES: Service[] = [
       "Ozone Nano-Steam Treatment",
       "Strengthening Serum Coat"
     ],
-    image: "/images/welcome_hero.jpg",
+    image: "/images/service_hair_spa.jpg",
     iconName: "Droplets",
     isPopular: true
   },
@@ -142,7 +142,7 @@ export const SERVICES: Service[] = [
       "Chilled Ice-Globe Lymphatic Massage",
       "Matte SPF 50 Hydrating Gel"
     ],
-    image: "/images/promo_model.jpg",
+    image: "/images/service_face_cleanup.jpg",
     iconName: "ShieldCheck",
     isPopular: true
   },
@@ -162,7 +162,7 @@ export const SERVICES: Service[] = [
       "Seamless Natural Crown Flow",
       "Maintenance & Styling Kit Guide"
     ],
-    image: "/images/service_haircut.jpg",
+    image: "/images/service_hair_fixing.jpg",
     iconName: "Crown",
     isPopular: true
   },
@@ -182,7 +182,7 @@ export const SERVICES: Service[] = [
       "Intense Nourishing Hair Spa",
       "Head, Neck & Shoulder Acupressure"
     ],
-    image: "/images/promo_model.jpg",
+    image: "/images/groom_royal_makeover.jpg",
     iconName: "Award",
     isPopular: true
   }
@@ -197,7 +197,7 @@ export const STYLISTS: Stylist[] = [
     reviewCount: "3,400+",
     experience: "16+ Yrs Exp",
     speciality: "Precision Scissor Fades & Beard Architecture",
-    image: "/images/stylist_deepu.jpg",
+    image: "/images/stylist_akhil.jpg",
     isAvailable: true
   },
   {
@@ -208,7 +208,7 @@ export const STYLISTS: Stylist[] = [
     reviewCount: "1,980+",
     experience: "9+ Yrs Exp",
     speciality: "Textured Crops, Taper Fades & Modern Styling",
-    image: "/images/stylist_senior.jpg",
+    image: "/images/stylist_vishnu.jpg",
     isAvailable: true
   },
   {
@@ -219,7 +219,7 @@ export const STYLISTS: Stylist[] = [
     reviewCount: "1,120+",
     experience: "7+ Yrs Exp",
     speciality: "Scalp Therapies, Keratin & Hair Fixing",
-    image: "/images/promo_model.jpg",
+    image: "/images/stylist_hari.jpg",
     isAvailable: true
   }
 ];
@@ -231,7 +231,7 @@ export const INITIAL_UPCOMING_BOOKING: Booking = {
   servicePrice: 350,
   stylistId: "akhil",
   stylistName: "Akhil",
-  stylistImage: "/images/stylist_deepu.jpg",
+  stylistImage: "/images/stylist_akhil.jpg",
   date: "2026-05-20",
   dayLabel: "Wed, May 20",
   timeSlot: "11:00 AM",

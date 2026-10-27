@@ -12,7 +12,6 @@ import {
   Calendar, 
   Clock, 
   Star, 
-  ChevronRight, 
   Phone, 
   MessageCircle, 
   Navigation, 
@@ -22,6 +21,7 @@ import {
 } from 'lucide-react';
 import { SALON_INFO, SERVICES } from '../data/salonData';
 import type { Service, Booking } from '../data/salonData';
+import { GroomMakeoverSlider } from './GroomMakeoverSlider';
 
 interface HomeScreenProps {
   onSelectService: (service: Service) => void;
@@ -157,44 +157,8 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
 
       {/* Main Scrollable Content */}
       <div className="px-5 space-y-6 pt-3">
-        {/* Special Offer Banner (Exact match to Screen 2) */}
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#E0A96D] via-[#D4A373] to-[#B88652] text-[#121214] p-5 shadow-[0_10px_25px_rgba(212,163,115,0.22)]">
-          {/* Subtle background glow & accents */}
-          <div className="absolute top-0 right-0 w-44 h-44 bg-white/20 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-          
-          <div className="flex items-center justify-between">
-            {/* Left text column */}
-            <div className="z-10 max-w-[58%]">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-black/15 text-[11px] font-bold tracking-wider uppercase text-neutral-900 border border-black/10">
-                Flat 20% OFF
-              </span>
-              <h3 className="font-serif text-xl font-bold tracking-tight mt-2 text-neutral-950 leading-tight">
-                New Client Special
-              </h3>
-              <p className="text-xs text-neutral-800 font-medium mt-1 leading-snug">
-                On your first complete groom makeover. Book now & save big!
-              </p>
-              
-              <button
-                onClick={() => onSelectService(SERVICES[0])}
-                className="mt-3.5 px-4 py-2 bg-[#121214] text-[#E0A96D] hover:bg-black rounded-full text-xs font-semibold tracking-wide transition-all duration-200 active:scale-95 shadow-md flex items-center gap-1.5 cursor-pointer"
-              >
-                <span>Claim Offer</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
-
-            {/* Right model image container */}
-            <div className="relative w-[115px] h-[125px] shrink-0 rounded-2xl overflow-hidden shadow-inner">
-              <img
-                src="/images/promo_model.jpg"
-                alt="Stylo Special Offer"
-                className="w-full h-full object-cover object-top scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent"></div>
-            </div>
-          </div>
-        </div>
+        {/* Groom Makeover Image Slides */}
+        <GroomMakeoverSlider onSelectService={onSelectService} />
 
         {/* Popular Services Section (Screen 2 Layout) */}
         <div>
@@ -269,7 +233,7 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({
             >
               <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 relative bg-neutral-800">
                 <img
-                  src={upcomingBooking.stylistImage || "/images/stylist_deepu.jpg"}
+                  src={upcomingBooking.stylistImage || "/images/stylist_akhil.jpg"}
                   alt={upcomingBooking.stylistName}
                   className="w-full h-full object-cover"
                 />

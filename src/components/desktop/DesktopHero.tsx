@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Star, Clock, Award, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Star, Clock, CheckCircle2 } from 'lucide-react';
 import { SALON_INFO } from '../../data/salonData';
 
 interface DesktopHeroProps {
@@ -16,11 +16,6 @@ export const DesktopHero: React.FC<DesktopHeroProps> = ({ onBookNow, onExploreSe
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left Column: Typography & CTAs */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1C1C1E] border border-[#E0A96D]/30 text-xs text-[#E0A96D] shadow-sm">
-            <Award className="w-3.5 h-3.5" />
-            <span className="font-semibold tracking-wide uppercase">Premier Luxury Grooming Destination</span>
-          </div>
-
           <h1 className="font-serif text-5xl sm:text-6xl font-bold tracking-tight text-white leading-[1.12]">
             Your Style,<br />
             <span className="italic font-normal text-[#E0A96D] gold-text-gradient">
